@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 // Amazon
 const getFromAmazon =async (queryItem="",pageNo=1,sortBy="") => {
   try{
-    let items = []
+    var items = []
     var typeSortBy
     if(!sortBy.localeCompare("new")) {
       typeSortBy = "date-desc-rank"
@@ -48,11 +48,12 @@ const getFromAmazon =async (queryItem="",pageNo=1,sortBy="") => {
     } else {
       typeSortBy=""
     }
+    console.log(`https://www.amazon.com/s?k=${queryItem}&s=${typeSortBy}&page=${pageNo}`)
     const result= await axios.get(`https://www.amazon.com/s?k=${queryItem}&s=${typeSortBy}&page=${pageNo}`)
     const $ = cheerio.load(result.data);
     console.log("Here")
 
-    $('.sg-col-20-of-24.s-result-item.s-asin.sg-col-0-of-12.sg-col-28-of-32.sg-col-16-of-20.sg-col.sg-col-32-of-36.sg-col-12-of-16.sg-col-24-of-28').each(function(){ 
+    $('.s-result-item').each(function(){ 
       var item = {
         image :$(this).find("img").attr("src"),
         link: `https://www.amazon.com${$(this).find("a").attr("href")}`,
@@ -64,7 +65,9 @@ const getFromAmazon =async (queryItem="",pageNo=1,sortBy="") => {
         // reviews:$(this).find('.a-link-normal').find(".a-size-base").text()        
       }      
        items.push(item)
+      
     })
+    items.shift()
     return items
   } catch(err) {
     return []
