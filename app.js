@@ -182,8 +182,9 @@ app.post('/', [
     queryItem = ""
   }
   try {
-    var amazon =await getFromAmazon(queryItem)  
+     
     var ebay =await getFromEbay(queryItem)  
+    var amazon =await getFromAmazon(queryItem) 
     if(ebay.length ===0 ) {
       for (i = 0; i < 5; i++) {
         amazon =await getFromAmazon(queryItem) 
