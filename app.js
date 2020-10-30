@@ -128,7 +128,7 @@ app.get('/',(req,res)=>{
 app.get('/error',(req,res)=>{
   res.render("error")
 })
-app.get('/products',async  (req, res) => {
+app.get('/products',async(req, res) => {
   let queryItem
   let pageNo
   let sortBy
@@ -140,9 +140,17 @@ app.get('/products',async  (req, res) => {
   console.log(queryItem,pageNo,sortBy)
   
   try {
-    const amazon =await getFromAmazon(queryItem,pageNo,sortBy)  
-    const ebay =await getFromEbay(queryItem,pageNo,sortBy)  
+    var amazon =await getFromAmazon(queryItem,pageNo,sortBy)  
+    var ebay =await getFromEbay(queryItem,pageNo,sortBy)  
 
+    if(amazon.length ===0 ) {
+      for (i = 0; i < 5; i++) {
+        amazon =await getFromAmazon(queryItem,pageNo,sortBy)  
+        if( amazon.length > 0) {
+          break
+        }
+      }
+    }
     // rendering
     // res.render("index")
     res.render("products",{
@@ -174,8 +182,17 @@ app.post('/', [
     queryItem = ""
   }
   try {
-    const amazon =await getFromAmazon(queryItem)  
-    const ebay =await getFromEbay(queryItem)  
+    var amazon =await getFromAmazon(queryItem)  
+    var ebay =await getFromEbay(queryItem)  
+    if(ebay.length ===0 ) {
+      for (i = 0; i < 5; i++) {
+        amazon =await getFromAmazon(queryItem) 
+        console.log(i)
+        if( amazon.length > 0) {
+          break
+        }
+      }
+    }
 
 
     res.render("products",{
