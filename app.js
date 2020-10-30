@@ -6,7 +6,7 @@ const path = require('path');
 var bodyParser = require('body-parser');
 const { check } = require('express-validator');
 const helmet = require("helmet");
- 
+const cacheControl = require("express-cache-controller")
 const app = express();
 app.use(
   helmet({
@@ -114,6 +114,9 @@ const getFromEbay =async (queryItem="",pageNo=1,sortBy="") => {
 }
 
 
+app.use(cacheControl({
+  noCache: true
+}));
 /**
  * API requests
  */

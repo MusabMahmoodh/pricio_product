@@ -16,6 +16,7 @@
     "cheerio": "^1.0.0-rc.3",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "express-cache-controller": "^1.1.0",
     "express-validator": "^6.6.1",
     "helmet": "^4.1.1"
   }
