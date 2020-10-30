@@ -185,10 +185,9 @@ app.post('/', [
      
     var ebay =await getFromEbay(queryItem)  
     var amazon =await getFromAmazon(queryItem) 
-    if(ebay.length ===0 ) {
+    if(amazon.length ===0 ) {
       for (i = 0; i < 5; i++) {
         amazon =await getFromAmazon(queryItem) 
-        console.log(i)
         if( amazon.length > 0) {
           break
         }
