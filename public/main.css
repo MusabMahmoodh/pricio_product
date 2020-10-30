@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    
+}
+
+html {
+    font-family: GillSans, Calibri, Trebuchet, sans-serif;
+  }
+body {
+    background: #fafafa;
+}
+/* 
+Card
+ */
+.card-title-custom {
+    font-size: .8rem;
+    font-weight: bold;
+    line-height: 1rem;
+}
+
+a {
+    color: black;
+}
+h5 {
+    line-height: 2.5rem;
+}
+/* 
+Header desigining
+*/
+header {
+    color: #e0f2f1;
+    
+    
+}
+header .row {
+    margin-bottom: 0;
+    padding: 10px 0;
+    
+}
+header h1{
+    margin-bottom: 0;
+    margin-top: 0;
+    overflow-y:hidden;
+    
+}
+header p{
+    margin-bottom: 0;
+    margin-top: 0;
+    color: #b2dfdb;
+}
+header input{
+    color: #e0f2f1;
+}
+header input:focus {
+    color:#b2dfdb;
+}
+/*
+sort menu 
+
+*/
+.sort {
+    margin-bottom: 20px;
+    padding: 5px 0;
+
+}
+.sort h5{
+    color:#eceff1 ;
+    font-size: small;
+    margin-bottom: 0;
+}
+.sort * {
+    color: #b0bec5;
+}
+/* 
+Icons
+*/
+.brand-icons {
+    width: 70%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.brand-icons img{
+    height: 50px;
+    
+}
+
+/* 
+Products/items
+*/
+.item-bucket {
+    max-height: 80%;
+    overflow-y: scroll;
+    margin-bottom: 20px;
+}
+.pages {
+    margin-bottom: 40px;
+}
+.main {
+    min-height: 50%;
+}
+.valign-wrapper {flex-wrap: wrap;}
+@media (max-width: 576px) { 
+    .container {
+        width: 100%;
+    }
+    header {
+        text-align: center;
+    }
+
+    footer {
+        text-align: center;
+    }
+}
