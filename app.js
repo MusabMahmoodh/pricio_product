@@ -48,10 +48,14 @@ const getFromAmazon =async (queryItem="",pageNo=1,sortBy="") => {
     } else {
       typeSortBy=""
     }
-    console.log(`https://www.amazon.com/s?k=${queryItem}&s=${typeSortBy}&page=${pageNo}`)
-    const result= await axios.get(`https://www.amazon.com/s?k=${queryItem}&s=${typeSortBy}&page=${pageNo}`)
-    const $ = cheerio.load(result.data);
-    console.log("Here")
+    
+    const result= await axios.get(`https://www.amazon.com/s?k=${queryItem}&s=${typeSortBy}&page=${pageNo}`,{
+      headers: {
+          'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36'
+      }
+  })
+    const $ = await cheerio.load(result.data);
+    
 
     $('.s-result-item').each(function(){ 
       var item = {
@@ -88,9 +92,13 @@ const getFromEbay =async (queryItem="",pageNo=1,sortBy="") => {
     } else {
       typeSortBy=""
     }
-    const result= await axios.get(`https://www.ebay.com/sch/i.html?_nkw=${queryItem}&_sop=${typeSortBy}&_pgn=${pageNo}`)    
+    const result= await axios.get(`https://www.ebay.com/sch/i.html?_nkw=${queryItem}&_sop=${typeSortBy}&_pgn=${pageNo}`,{
+      headers: {
+          'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36'
+      }
+  })    
     const $ = cheerio.load(result.data);
-    console.log("Here")
+    
 
     $('.s-item.s-item--watch-at-corner').each(function(){ 
       var item = {
@@ -132,12 +140,12 @@ app.get('/products',async(req, res) => {
   let queryItem
   let pageNo
   let sortBy
-  console.log("started")
+  // console.log("started")
   queryItem = req.query.queryItem ?`${req.query.queryItem}`:""
   pageNo = req.query.pageNo ?`${req.query.pageNo}`:1
   sortBy = req.query.sortBy ?`${req.query.sortBy}`:""
 
-  console.log(queryItem,pageNo,sortBy)
+  // console.log(queryItem,pageNo,sortBy)
   
   try {
     var amazon =await getFromAmazon(queryItem,pageNo,sortBy)  
@@ -145,7 +153,9 @@ app.get('/products',async(req, res) => {
 
     if(amazon.length ===0 ) {
       for (i = 0; i < 5; i++) {
+      
         amazon =await getFromAmazon(queryItem,pageNo,sortBy)  
+        
         if( amazon.length > 0) {
           break
         }
@@ -166,7 +176,7 @@ app.get('/products',async(req, res) => {
   
     
   
-  console.log("done")
+  // console.log("done")
   
 })
 
@@ -185,7 +195,7 @@ app.post('/', [
      
     var ebay =await getFromEbay(queryItem)  
     var amazon =await getFromAmazon(queryItem) 
-    console.log(amazon)
+    // console.log(amazon)
     if(amazon.length ===0 ) {
       for (i = 0; i < 5; i++) {
         amazon =await getFromAmazon(queryItem) 
